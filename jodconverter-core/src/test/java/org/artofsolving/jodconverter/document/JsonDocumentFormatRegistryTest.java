@@ -12,34 +12,30 @@
 //
 package org.artofsolving.jodconverter.document;
 
-import static org.testng.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.io.IOUtils;
-import org.artofsolving.jodconverter.document.DocumentFamily;
-import org.artofsolving.jodconverter.document.DocumentFormat;
-import org.artofsolving.jodconverter.document.DocumentFormatRegistry;
-import org.artofsolving.jodconverter.document.JsonDocumentFormatRegistry;
-
 import org.json.JSONException;
-import org.testng.annotations.Test;
+import org.junit.Test;
 
-@Test
 public class JsonDocumentFormatRegistryTest {
 
-    public void readJsonRegistry() throws JSONException, IOException {
-        InputStream input = getClass().getResourceAsStream("/document-formats.js");
-        DocumentFormatRegistry registry = null;
-        try {
-            registry = new JsonDocumentFormatRegistry(input);
-        } finally {
-            IOUtils.closeQuietly(input);
-        }
-        DocumentFormat odt = registry.getFormatByExtension("odt");
-        assertNotNull(odt);
-        assertNotNull(odt.getStoreProperties(DocumentFamily.TEXT));
-    }
+	@Test
+	public void readJsonRegistry() throws JSONException, IOException {
+		InputStream input = getClass().getResourceAsStream(
+		        "/document-formats.js");
+		DocumentFormatRegistry registry = null;
+		try {
+			registry = new JsonDocumentFormatRegistry(input);
+		} finally {
+			IOUtils.closeQuietly(input);
+		}
+		DocumentFormat odt = registry.getFormatByExtension("odt");
+		assertNotNull(odt);
+		assertNotNull(odt.getStoreProperties(DocumentFamily.TEXT));
+	}
 
 }

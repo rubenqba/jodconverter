@@ -12,42 +12,45 @@
 //
 package org.artofsolving.jodconverter.office;
 
-import static org.testng.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
 import org.artofsolving.jodconverter.ReflectionUtils;
 import org.artofsolving.jodconverter.process.PureJavaProcessManager;
-import org.testng.annotations.Test;
+import org.junit.Test;
 
-@Test(groups="integration")
 public class ExternalOfficeManagerTest {
 
-    public void executeTask() throws Exception {
-        UnoUrl unoUrl = UnoUrl.socket(2002);
-        OfficeProcess officeProcess = new OfficeProcess(OfficeUtils.getDefaultOfficeHome(), unoUrl,
-            null, null, new File(System.getProperty("java.io.tmpdir")), new PureJavaProcessManager());
-        officeProcess.start();
-        Thread.sleep(2000);
-        Integer exitCode = officeProcess.getExitCode();
-        if (exitCode != null && exitCode.equals(Integer.valueOf(81))) {
-            officeProcess.start(true);
-            Thread.sleep(2000);
-        }
-        
-        ExternalOfficeManager manager = new ExternalOfficeManager(unoUrl, true);
-        manager.start();
-        
-        MockOfficeTask task = new MockOfficeTask();
-        manager.execute(task);
-        assertTrue(task.isCompleted());
-        
-        manager.stop();
-        //TODO replace when OfficeProcess has a forciblyTerminate()
-        Process process = (Process) ReflectionUtils.getPrivateField(officeProcess, "process");
-        process.destroy();
-    }
+	@Test
+	public void executeTask() throws Exception {
+		UnoUrl unoUrl = UnoUrl.socket(2002);
+		OfficeProcess officeProcess = new OfficeProcess(
+		        OfficeUtils.getDefaultOfficeHome(), unoUrl, null, null,
+		        new File(System.getProperty("java.io.tmpdir")),
+		        new PureJavaProcessManager());
+		officeProcess.start();
+		Thread.sleep(2000);
+		Integer exitCode = officeProcess.getExitCode();
+		if (exitCode != null && exitCode.equals(Integer.valueOf(81))) {
+			officeProcess.start(true);
+			Thread.sleep(2000);
+		}
 
-    //TODO test auto-reconnection
+		ExternalOfficeManager manager = new ExternalOfficeManager(unoUrl, true);
+		manager.start();
+
+		MockOfficeTask task = new MockOfficeTask();
+		manager.execute(task);
+		assertTrue(task.isCompleted());
+
+		manager.stop();
+		// TODO replace when OfficeProcess has a forciblyTerminate()
+		Process process = (Process) ReflectionUtils.getPrivateField(
+		        officeProcess, "process");
+		process.destroy();
+	}
+
+	// TODO test auto-reconnection
 
 }
