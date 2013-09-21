@@ -228,7 +228,7 @@ public class DefaultOfficeManagerConfiguration {
 
 	private boolean isSigarAvailable() {
 		try {
-			Class.forName("org.hyperic.sigar.Siga", false, getClass()
+			Class.forName("org.hyperic.sigar.Sigar", false, getClass()
 			        .getClassLoader());
 			return true;
 		} catch (ClassNotFoundException classNotFoundException) {
