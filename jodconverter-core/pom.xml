@@ -5,7 +5,7 @@
 
 	<groupId>org.artofsolving.jodconverter</groupId>
 	<artifactId>jodconverter-core</artifactId>
-	<version>3.0-SNAPSHOT</version>
+	<version>3.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>JODConverter - Core Library</name>
@@ -173,5 +173,18 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<distributionManagement>
+		<repository>
+			<id>releases</id>
+			<name>maven-datys-releases</name>
+			<url>http://maven.scu.datys.cu/artifactory/libs-release-local</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>maven-datys-snapshots</name>
+			<url>http://maven.scu.datys.cu/artifactory/libs-snapshot-local</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 </project>
